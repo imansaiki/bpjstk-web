@@ -10,7 +10,7 @@
     "test": "echo \"No test specified\" && exit 0",
     "build": "quasar build",
     "start": "node server.js",
-    "heroku-postbuild": "npm install --prefix client && npm run build --prefix client"
+    "heroku-postbuild": "npm install && npm build"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
