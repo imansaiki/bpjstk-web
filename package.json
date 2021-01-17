@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Web for Monitoring BPJS",
   "productName": "bpjstk_web",
-  "author": "Iman Setya A <iman.setya@batmandiri.com>",
+  "author": "Iman Setya A <imansaikis@gmail.com>",
   "private": true,
   "scripts": {
     "lint": "eslint --ext .js,.vue ./",
