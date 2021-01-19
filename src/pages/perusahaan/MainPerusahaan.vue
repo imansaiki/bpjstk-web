@@ -1,5 +1,20 @@
 <template>
-  <q-page> <vue-query-builder :rules="rules"></vue-query-builder> </q-page>
+  <q-page>
+    <q-list bordered class="rounded-borders">
+      <q-expansion-item
+        expand-separator
+        icon="drafts"
+        label="Filter"
+        header-class="text-purple"
+      >
+        <q-card>
+          <q-card-section>
+            <vue-query-builder :rules="rules"></vue-query-builder>
+          </q-card-section>
+        </q-card>
+      </q-expansion-item>
+    </q-list>
+  </q-page>
 </template>
 
 <script>
