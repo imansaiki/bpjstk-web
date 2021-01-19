@@ -1,5 +1,5 @@
 <template>
-  <div class="shadow-1" :class="'depth-' + depth.toString()">
+  <div class="shadow-2 q-ma-md q-pb-md" :class="'depth-' + depth.toString()">
     <div
       class="vqb-group-heading rounded-t py-3 px-5 bg-gray-300 border-b border-gray-400"
     >
