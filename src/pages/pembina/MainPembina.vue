@@ -21,23 +21,20 @@
       </q-expansion-item>
     </q-list>
     <div class="q-pt-md">
-      <list-perusahaan @row-clicked="listSuratShow"></list-perusahaan>
+      <list-pembina @row-clicked="listSuratShow"></list-pembina>
     </div>
     <q-dialog v-model="listSurat" full-width persistent>
-      <basic-dialog-card
-        ><list-surat-perusahaan></list-surat-perusahaan
-      ></basic-dialog-card>
+      <basic-dialog-card></basic-dialog-card>
     </q-dialog>
   </q-page>
 </template>
 
 <script>
-import ListPerusahaan from "components/ListPerusahaan.vue";
-import ListSuratPerusahaan from "components/ListSuratPerusahaan.vue";
+import ListPembina from "components/ListPembina.vue";
 import BasicDialogCard from "components/BasicDialogCard.vue";
 export default {
   name: "PerusahaanMain",
-  components: { ListSuratPerusahaan, BasicDialogCard, ListPerusahaan },
+  components: { ListPembina, BasicDialogCard, ListPerusahaan },
   data() {
     return {
       listSurat: false,
@@ -47,8 +44,7 @@ export default {
     };
   },
   methods: {
-    listSuratShow(e) {
-      console.log(e);
+    listSuratShow() {
       this.listSurat = true;
     },
   },

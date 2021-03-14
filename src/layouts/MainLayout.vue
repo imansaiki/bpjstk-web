@@ -8,7 +8,7 @@
           <q-avatar>
             <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg" />
           </q-avatar>
-          BPJSTK
+          SIYAP
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
@@ -50,6 +50,7 @@
 </template>
 
 <script>
+
 export default {
   data() {
     return {
