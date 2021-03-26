@@ -8,6 +8,7 @@
 
 <script>
 import LoginForm from "components/LoginForm.vue";
+import { api } from 'boot/axios'
 
 export default {
   name: "LoginPage",

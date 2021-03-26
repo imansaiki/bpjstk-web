@@ -35,6 +35,7 @@
 import ListPerusahaan from "components/ListPerusahaan.vue";
 import ListSuratPerusahaan from "components/ListSuratPerusahaan.vue";
 import BasicDialogCard from "components/BasicDialogCard.vue";
+import { api } from 'boot/axios'
 export default {
   name: "PerusahaanMain",
   components: { ListSuratPerusahaan, BasicDialogCard, ListPerusahaan },
@@ -46,11 +47,28 @@ export default {
       
     };
   },
+  mounted(){
+    this.loadData()
+  },
   methods: {
     listSuratShow(e) {
       console.log(e);
       this.listSurat = true;
     },
+    loadData () {
+    api.get('/api/test')
+      .then((response) => {
+        console.log(response)
+      })
+      .catch(() => {
+        this.$q.notify({
+          color: 'negative',
+          position: 'top',
+          message: 'Loading failed',
+          icon: 'report_problem'
+        })
+      })
+  },
   },
 };
 </script>

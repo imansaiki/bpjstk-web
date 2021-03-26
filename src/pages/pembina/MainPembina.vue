@@ -32,9 +32,10 @@
 <script>
 import ListPembina from "components/ListPembina.vue";
 import BasicDialogCard from "components/BasicDialogCard.vue";
+import { api } from 'boot/axios'
 export default {
-  name: "PerusahaanMain",
-  components: { ListPembina, BasicDialogCard, ListPerusahaan },
+  name: "PembinaMain",
+  components: { ListPembina, BasicDialogCard },
   data() {
     return {
       listSurat: false,
@@ -43,10 +44,27 @@ export default {
       
     };
   },
+  mounted(){
+    this.loadData()
+  },
   methods: {
     listSuratShow() {
       this.listSurat = true;
     },
+    loadData () {
+    api.get('/api/test')
+      .then((response) => {
+        console.log(response)
+      })
+      .catch(() => {
+        this.$q.notify({
+          color: 'negative',
+          position: 'top',
+          message: 'Loading failed',
+          icon: 'report_problem'
+        })
+      })
+  },
   },
 };
 </script>

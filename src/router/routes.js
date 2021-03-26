@@ -9,7 +9,8 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '/', component: () => import('pages/perusahaan/MainPerusahaan.vue') },
-      { path: '/pembina', component: () => import('pages/perusahaan/MainPerusahaan.vue') },
+      { path: '/pembina', component: () => import('pages/pembina/MainPembina.vue') },
+      { path: '/surat', component: () => import('pages/surat/MainSurat.vue') },
     ]
   },
 

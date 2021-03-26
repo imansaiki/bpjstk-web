@@ -39,7 +39,7 @@
 </template>
 <script>
 export default {
-  name: "ListPembina",
+  name: "ListSurat",
   props:["kpp"],
   data() {
     return {
