@@ -31,6 +31,7 @@ export default {
       this.$store.dispatch("login",{username:this.username, password:this.password})
       .then((response) => {
         console.log(response)
+        this.$router.push({ name: "PerusahaanPage" });
       })
       .catch((err) => {
         console.log(err)

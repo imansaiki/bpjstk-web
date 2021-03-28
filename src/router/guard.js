@@ -1,6 +1,7 @@
 import store from "../store/index";
 export const isAuthenticated = (to, from, next) => {
-  if (store.isAuthenticated) {
+
+  if (store.getters.isAuthenticated) {
     if (
       to.name === "LoginPage"
     ) {
@@ -29,7 +30,7 @@ export const isAuthenticated = (to, from, next) => {
   }
 };
 export const isAdmin = (to, from, next) => {
-  if (store.isAdmin && store.isAuthenticated) {
+  if (store.getters.isAdmin && store.getters.isAuthenticated) {
     console.log("authorization route: role match, route allowed");
     next();
   } else {

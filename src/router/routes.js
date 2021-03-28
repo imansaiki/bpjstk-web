@@ -5,6 +5,7 @@ const routes = [
   {
     path: '/login',
     name:'LoginPage',
+    beforeEnter:rule.isAuthenticated,
     component: () => import('layouts/LoginLayout.vue'),
   },
   {

@@ -19,8 +19,7 @@ Vue.use(Vuex)
  * with the Store instance.
  */
 
-export default function (/* { ssrContext } */) {
-  const Store = new Vuex.Store({
+export default new Vuex.Store({
     state:State,
     actions:Actions,
     getters:Getters,
@@ -34,5 +33,3 @@ export default function (/* { ssrContext } */) {
     strict: process.env.DEBUGGING
   })
 
-  return Store
-}

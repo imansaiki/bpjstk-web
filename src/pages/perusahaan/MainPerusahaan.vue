@@ -56,7 +56,7 @@ export default {
       this.listSurat = true;
     },
     loadData () {
-    api.get('/api/test')
+    Api.get('/api/test')
       .then((response) => {
         console.log(response)
       })

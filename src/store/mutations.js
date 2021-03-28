@@ -19,6 +19,7 @@ export const setLoginTime = (state,payload) => {
     localStorage.setItem("loginTime",payload)
 }
 export const setLoginData = (state,payload) => {
+    console.log(payload)
     state.token = payload.token;
     state.name = payload.name;
     state.username = payload.username;

@@ -14,6 +14,7 @@ export const getName= (state) => {
     return state.name
 }
 export const isAuthenticated= (state) => {
+    console.log("getters, is authenticated",state.token)
     return !!state.token
 }
 export const isAdmin= (state) => {
