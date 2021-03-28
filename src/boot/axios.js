@@ -1,17 +1,17 @@
 import Vue from 'vue'
-import axios from 'axios'
+import Axios from 'axios'
 
-Vue.prototype.$axios = axios
+Vue.prototype.$axios = Axios
 
-const api = axios.create({ baseURL: 'http://localhost:8081' })
+const Api = Axios.create({ baseURL: 'http://localhost:8081' })
 
-api.interceptors.request.use(
+Api.interceptors.request.use(
   (config) => {
     console.log(`Request interceptor : request intercepted`);
     console.log(`Request interceptor : requested url => ${config.url}`);
-    if(localStorage.getItem("token")){
-        config.headers.common["Authorization"]="Basic "+localStorage.getItem("token")
-    }
+    //if(localStorage.getItem("token")){
+    //    config.headers.common["Authorization"]="Basic "+localStorage.getItem("token")
+    //}
     
 
     return config;
@@ -20,8 +20,18 @@ api.interceptors.request.use(
     return Promise.reject(error);
   }
 );
-Vue.prototype.$api = api
+
+//axios interceptor for response, logout if err status 401
+ Api.interceptors.response.use( (response) => {
+   console.log("response interceptor: Authorized response")
+   return response;
+ },(error) => {
+
+    return Promise.reject(error);
+ });
+
+Vue.prototype.$api = Api
 // ^ ^ ^ this will allow you to use this.$api
 //       so you can easily perform requests against your app's API
 
-export { axios, api }
+export { Axios, Api }

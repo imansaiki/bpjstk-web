@@ -32,7 +32,7 @@
 <script>
 import ListPembina from "components/ListPembina.vue";
 import BasicDialogCard from "components/BasicDialogCard.vue";
-import { api } from 'boot/axios'
+import { Api } from 'boot/axios'
 export default {
   name: "PembinaMain",
   components: { ListPembina, BasicDialogCard },

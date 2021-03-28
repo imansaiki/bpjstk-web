@@ -1,3 +1,5 @@
+import {isAuthenticated,isAdmin} from './guard'
+
 
 const routes = [
   {
@@ -8,9 +10,21 @@ const routes = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '/', component: () => import('pages/perusahaan/MainPerusahaan.vue') },
-      { path: '/pembina', component: () => import('pages/pembina/MainPembina.vue') },
-      { path: '/surat', component: () => import('pages/surat/MainSurat.vue') },
+      { 
+        path: '/',
+        name:'PerusahaanPage',
+        component: () => import('pages/perusahaan/MainPerusahaan.vue') 
+      },
+      { 
+        path: '/pembina',
+        name:'PembinaPage',
+        component: () => import('pages/pembina/MainPembina.vue') 
+      },
+      { 
+        path: '/surat',
+        name:'SuratPage',
+        component: () => import('pages/surat/MainSurat.vue') 
+      },
     ]
   },
 

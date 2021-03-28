@@ -35,7 +35,7 @@
 import ListPerusahaan from "components/ListPerusahaan.vue";
 import ListSuratPerusahaan from "components/ListSuratPerusahaan.vue";
 import BasicDialogCard from "components/BasicDialogCard.vue";
-import { api } from 'boot/axios'
+import { Api } from 'boot/axios'
 export default {
   name: "PerusahaanMain",
   components: { ListSuratPerusahaan, BasicDialogCard, ListPerusahaan },
