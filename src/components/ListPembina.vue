@@ -145,6 +145,9 @@ export default {
       ],
     };
   },
+  mounted(){
+    console.log("ListPembinaInit")
+  },
   methods: {
     detailPembina(kodePembina) {
       console.log(kodePembina, "clicked");

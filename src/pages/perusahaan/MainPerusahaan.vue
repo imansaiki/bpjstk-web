@@ -21,11 +21,11 @@
       </q-expansion-item>
     </q-list>
     <div class="q-pt-md">
-      <list-perusahaan @row-clicked="listSuratShow"></list-perusahaan>
+      <list-perusahaan @row-clicked="listSuratShow" ref="listSuratComp"></list-perusahaan>
     </div>
     <q-dialog v-model="listSurat" full-width persistent>
       <basic-dialog-card
-        ><list-surat-perusahaan></list-surat-perusahaan
+        ><list-surat-perusahaan v-bind:paramParent="clickedRowObj"></list-surat-perusahaan
       ></basic-dialog-card>
     </q-dialog>
   </q-page>
@@ -44,6 +44,7 @@ export default {
       listSurat: false,
       text: "",
       left: false,
+      clickedRowObj:null
       
     };
   },
@@ -52,7 +53,8 @@ export default {
   },
   methods: {
     listSuratShow(e) {
-      console.log(e);
+      
+      this.clickedRowObj=e
       this.listSurat = true;
     },
     loadData () {

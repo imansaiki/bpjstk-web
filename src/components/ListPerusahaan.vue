@@ -1,13 +1,13 @@
 <template>
   <q-table
-    title="Daftar Perusahaan"
+    :title="'Daftar Perusahaan'"
     dense
     :data="data"
     :columns="columns"
     row-key="name"
   >
     <template v-slot:body="props">
-      <q-tr :props="props" @click="listSuratShow(props.row.npp)">
+      <q-tr :props="props" @click="clickedNpp(props.row.npp,props.row.name)">
         <q-td key="chNpp" :props="props">
           {{ props.row.npp }}
         </q-td>
@@ -32,15 +32,14 @@
         <q-td key="chEmail" :props="props">
           {{ props.row.email }}
         </q-td>
-        <q-td key="chAction" :props="props"> </q-td>
       </q-tr>
     </template>
   </q-table>
 </template>
 <script>
 export default {
-  name: "ListSurat",
-  props:["kpp"],
+  name: "ListPerusahaan",
+  props:["paramParent"],
   data() {
     return {
       icon: false,
@@ -64,7 +63,6 @@ export default {
         { name: "chPicPosition", label: "Jabatan PIC", field: "picPosition" },
         { name: "chHp", label: "HP", field: "hp" },
         { name: "chEmail", label: "Email", field: "email" },
-        { name: "chAction", label: "Action" },
       ],
       data: [
         {
@@ -170,9 +168,15 @@ export default {
       ],
     };
   },
+  mounted(){
+    console.log("ListPerusahaanInit")
+    if(this.paramParent){
+      console.log(this.paramParent)
+    }
+  },
   methods: {
-    listSuratShow(npp) {
-      this.$emit("row-clicked", npp);
+    clickedNpp(npp,name) {
+      this.$emit("row-clicked", {npp:npp,name:name});
     },
   },
 };

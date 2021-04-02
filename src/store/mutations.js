@@ -38,10 +38,6 @@ export const resetAll = (state) => {
     state.username = null;
     state.role = null;
     state.loginTime = null;
-    localStorage.setItem("token",null)
-    localStorage.setItem("name",null)
-    localStorage.setItem("username",null)
-    localStorage.setItem("role",null)
-    localStorage.setItem("loginTime",null)
+    localStorage.clear()
     
 }

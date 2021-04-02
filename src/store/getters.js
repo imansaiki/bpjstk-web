@@ -14,8 +14,8 @@ export const getName= (state) => {
     return state.name
 }
 export const isAuthenticated= (state) => {
-    console.log("getters, is authenticated",state.token)
-    return !!state.token
+    
+    return state.token!=null
 }
 export const isAdmin= (state) => {
     return state.role=="ROLE_ADMIN"

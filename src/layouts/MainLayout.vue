@@ -10,6 +10,7 @@
           </q-avatar>
           SIYAP
         </q-toolbar-title>
+        <q-btn flat icon="exit_to_app" @click="logout">Logout</q-btn>
       </q-toolbar>
     </q-header>
 
@@ -57,5 +58,12 @@ export default {
       left: false,
     };
   },
+  methods:{
+    logout(){
+      this.$store.dispatch("logout").then((resp)=>{
+        this.$router.push({ name: "LoginPage" });
+      })
+    }
+  }
 };
 </script>

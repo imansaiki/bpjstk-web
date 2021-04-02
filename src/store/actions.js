@@ -19,3 +19,12 @@ export const login = (context,payload) => {
           });
       });
 }
+export const logout = (context) => {
+    return new Promise((resolve, reject) => {
+        console.log(`logout in process`);
+        //console.log(`my username is : ${payload.username}`);
+        //console.log(`my password is : ${payload.password}`);
+        context.commit("resetAll")
+        resolve("Logout Success")
+      });
+}
