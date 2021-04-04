@@ -49,7 +49,7 @@ export default {
     };
   },
   mounted(){
-    this.loadData()
+
   },
   methods: {
     listSuratShow(e) {
@@ -57,20 +57,6 @@ export default {
       this.clickedRowObj=e
       this.listSurat = true;
     },
-    loadData () {
-    Api.get('/api/test')
-      .then((response) => {
-        console.log(response)
-      })
-      .catch(() => {
-        this.$q.notify({
-          color: 'negative',
-          position: 'top',
-          message: 'Loading failed',
-          icon: 'report_problem'
-        })
-      })
-  },
   },
 };
 </script>

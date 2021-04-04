@@ -4,6 +4,9 @@
     dense
     :data="data"
     :columns="columns"
+    :pagination.sync="pagination"
+    :rows-per-page-options="[10, 20, 30]"
+    @update:pagination="loadData"
     row-key="name"
   >
     <template v-slot:body="props">
@@ -12,7 +15,7 @@
           {{ props.row.npp }}
         </q-td>
         <q-td key="chPerusahaan" :props="props">
-          {{ props.row.name }}
+          {{ props.row.nama }}
         </q-td>
         <q-td key="chAlamat" :props="props">
           {{ props.row.alamat }}
@@ -21,13 +24,13 @@
           {{ props.row.kota }}
         </q-td>
         <q-td key="chPic" :props="props">
-          {{ props.row.pic }}
+          {{ props.row.namaPic }}
         </q-td>
         <q-td key="chPicPosition" :props="props">
-          {{ props.row.picPosition }}
+          {{ props.row.jabatanPic }}
         </q-td>
         <q-td key="chHp" :props="props">
-          {{ props.row.hp }}
+          {{ props.row.telepon }}
         </q-td>
         <q-td key="chEmail" :props="props">
           {{ props.row.email }}
@@ -37,11 +40,19 @@
   </q-table>
 </template>
 <script>
+import { Api } from 'boot/axios'
 export default {
   name: "ListPerusahaan",
   props:["paramParent"],
   data() {
     return {
+      pagination: {
+        //sortBy: 'desc',
+        //descending: false,
+        page: 1,
+        rowsPerPage: 10
+        // rowsNumber: xx if getting data from a server
+      },
       icon: false,
       columns: [
         {
@@ -57,115 +68,14 @@ export default {
           field: "perusahaan",
           align: "left",
         },
-        { name: "chAlamat", label: "Alamat", field: "alamat", sortable: true },
+        { name: "chAlamat", label: "Alamat", field: "alamat"},
         { name: "chKota", label: "Kota/Kabupaten", field: "kota" },
         { name: "chPic", label: "Nama PIC", field: "pic" },
         { name: "chPicPosition", label: "Jabatan PIC", field: "picPosition" },
         { name: "chHp", label: "HP", field: "hp" },
         { name: "chEmail", label: "Email", field: "email" },
       ],
-      data: [
-        {
-          name: "DEOMASTER HYGIENE INDONESIA",
-          npp: 16079301,
-          alamat: "",
-          kota: "Jakarta Selatan",
-          pic: "Ade Nugraha",
-          picPosition: "HRD",
-          hp: "088912323411",
-          email: "hr@deomaster.com",
-        },
-        {
-          name: "MARBOT MASJID HIMMATUL MASAAKIN",
-          npp: 16079302,
-          alamat: "",
-          kota: "Kota Tangerang",
-          pic: "Bagas Darnamaba",
-          picPosition: "HRD",
-          hp: "085722812884",
-          email: "hr@deomaster.com",
-        },
-        {
-          name: "VETERAN INDO KOR",
-          npp: 16079303,
-          alamat: "",
-          kota: "Jakarta Utara",
-          pic: "Bagus Tanubana",
-          picPosition: "HRD",
-          hp: "085722812884",
-          email: "hr@deomaster.com",
-        },
-        {
-          name: "PENGURUS RT 02 RW 06 PULO -APARATUR RUKUN TETANGGA",
-          npp: 16079304,
-          alamat: "",
-          kota: "Jakarta Pusat",
-          pic: "Andre Suramartawi",
-          picPosition: "HRD",
-          hp: "085722812884",
-          email: "hr@deomaster.com",
-        },
-        {
-          name: "ALFINDO MITRA SEMBADA",
-          npp: 16079305,
-          alamat: "",
-          kota: "Jakarta Selatan",
-          pic: "Sukirman Madureja",
-          picPosition: "HRD",
-          hp: "085722812884",
-          email: "hr@deomaster.com",
-        },
-        {
-          name: "KANTOR NOTARIS RISBERT, SH",
-          npp: 16079306,
-          alamat: "",
-          kota: "Jakarta Selatan",
-          pic: "Sayuti Admaja",
-          picPosition: "HRD",
-          hp: "085722812884",
-          email: "hr@deomaster.com",
-        },
-        {
-          name: "UNGGUL PUTRA JAYA",
-          npp: 16079307,
-          alamat: "",
-          kota: "Jakarta Selatan",
-          pic: "Tiona Kusnandi",
-          picPosition: "HRD",
-          hp: "085722812884",
-          email: "hr@deomaster.com",
-        },
-        {
-          name: "GIGIEAT INDONESIA RAYA - MANAGEMENT",
-          npp: 16079308,
-          alamat: "",
-          kota: "Jakarta Selatan",
-          pic: "Indah Herawati",
-          picPosition: "HRD",
-          hp: "085722812884",
-          email: "hr@deomaster.com",
-        },
-        {
-          name: "GRANIT ABADI SEJAHTERA PT",
-          npp: 16079309,
-          alamat: "",
-          kota: "Jakarta Selatan",
-          pic: "Malik Mulyana",
-          picPosition: "HRD",
-          hp: "085722812884",
-          email: "hr@deomaster.com",
-        },
-        {
-          name: "PRIMA TEKNOLOGI ABADI",
-          npp: 16079310,
-          alamat: "",
-          kota: "Jakarta Selatan",
-          pic: "Edward Manunggal",
-          picPosition: "HRD",
-          hp: "085722812884",
-          email: "hr@deomaster.com",
-        },
-      ],
+      data: [],
     };
   },
   mounted(){
@@ -173,8 +83,29 @@ export default {
     if(this.paramParent){
       console.log(this.paramParent)
     }
+    //this.loadData({size:this.pagination.rowsPerPage,page:this.pagination.page-1})
+  },
+  watch: {
+    // whenever question changes, this function will run
+    //pagination: function (newPagination, oldPagination) {
+    //  this.loadData({page:newPagination.page,size:newPagination.rowsPerPage})
+   // }
   },
   methods: {
+    loadData(query){
+      return new Promise((resolve,reject)=>{
+        query.page=this.pagination.page-1
+        query.size=this.pagination.rowsPerPage
+        Api.get("/perusahaan/getAll",{params:query})
+        .then(res=>{
+          console.log(res)
+          this.data = res.data.content
+          resolve(res)
+        }).catch(err=>{
+          reject(err)
+        })
+      })
+    },
     clickedNpp(npp,name) {
       this.$emit("row-clicked", {npp:npp,name:name});
     },

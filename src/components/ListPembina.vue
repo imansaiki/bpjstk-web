@@ -4,6 +4,9 @@
     dense
     :data="data"
     :columns="columns"
+    :pagination.sync="pagination"
+    :rows-per-page-options="[10, 20, 30]"
+    @update:pagination="loadData"
     row-key="name"
   >
     <template v-slot:body="props">
@@ -61,88 +64,7 @@ export default {
           field: "action",
         },
       ],
-      data: [
-        {
-          kodePembina: "ABS9921",
-          namaPembina: "Achmad Bumi Sentosa",
-          hp: "081221334443",
-          email: "23@gmail.com",
-          alamat: "JL.Fatmawati Jakarta Selatan",
-          level: 1,
-        },
-        {
-          kodePembina: "ABS9921",
-          namaPembina: "Achmad Bumi Sentosa",
-          hp: "081221334443",
-          email: "23@gmail.com",
-          alamat: "JL.Fatmawati Jakarta Selatan",
-          level: 1,
-        },
-        {
-          kodePembina: "ABS9921",
-          namaPembina: "Achmad Bumi Sentosa",
-          hp: "081221334443",
-          email: "23@gmail.com",
-          alamat: "JL.Fatmawati Jakarta Selatan",
-          level: 1,
-        },
-        {
-          kodePembina: "ABS9921",
-          namaPembina: "Achmad Bumi Sentosa",
-          hp: "081221334443",
-          email: "23@gmail.com",
-          alamat: "JL.Fatmawati Jakarta Selatan",
-          level: 1,
-        },
-        {
-          kodePembina: "ABS9921",
-          namaPembina: "Achmad Bumi Sentosa",
-          hp: "081221334443",
-          email: "23@gmail.com",
-          alamat: "JL.Fatmawati Jakarta Selatan",
-          level: 1,
-        },
-        {
-          kodePembina: "ABS9921",
-          namaPembina: "Achmad Bumi Sentosa",
-          hp: "081221334443",
-          email: "23@gmail.com",
-          alamat: "JL.Fatmawati Jakarta Selatan",
-          level: 1,
-        },
-        {
-          kodePembina: "ABS9921",
-          namaPembina: "Achmad Bumi Sentosa",
-          hp: "081221334443",
-          email: "23@gmail.com",
-          alamat: "JL.Fatmawati Jakarta Selatan",
-          level: 1,
-        },
-        {
-          kodePembina: "ABS9921",
-          namaPembina: "Achmad Bumi Sentosa",
-          hp: "081221334443",
-          email: "23@gmail.com",
-          alamat: "JL.Fatmawati Jakarta Selatan",
-          level: 1,
-        },
-        {
-          kodePembina: "ABS9921",
-          namaPembina: "Achmad Bumi Sentosa",
-          hp: "081221334443",
-          email: "23@gmail.com",
-          alamat: "JL.Fatmawati Jakarta Selatan",
-          level: 1,
-        },
-        {
-          kodePembina: "ABS9921",
-          namaPembina: "Achmad Bumi Sentosa",
-          hp: "081221334443",
-          email: "23@gmail.com",
-          alamat: "JL.Fatmawati Jakarta Selatan",
-          level: 1,
-        },
-      ],
+      data: [],
     };
   },
   mounted(){
@@ -151,6 +73,20 @@ export default {
   methods: {
     detailPembina(kodePembina) {
       console.log(kodePembina, "clicked");
+    },
+    loadData(query){
+      return new Promise((resolve,reject)=>{
+        query.page=this.pagination.page-1
+        query.size=this.pagination.rowsPerPage
+        Api.get("/pembina/getAll",{params:query})
+        .then(res=>{
+          console.log(res)
+          this.data = res.data.content
+          resolve(res)
+        }).catch(err=>{
+          reject(err)
+        })
+      })
     },
   },
 };

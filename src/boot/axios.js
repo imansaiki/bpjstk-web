@@ -7,11 +7,11 @@ const Api = Axios.create({ baseURL: 'http://localhost:8081' })
 
 Api.interceptors.request.use(
   (config) => {
-    console.log(`Request interceptor : request intercepted`);
-    console.log(`Request interceptor : requested url => ${config.url}`);
-    //if(localStorage.getItem("token")){
-    //    config.headers.common["Authorization"]="Basic "+localStorage.getItem("token")
-    //}
+    //console.log(`Request interceptor : request intercepted`);
+    //console.log(`Request interceptor : requested url => ${config.url}`);
+    if(localStorage.getItem("token")){
+        config.headers.common["Authorization"]="Basic "+localStorage.getItem("token")
+    }
     
 
     return config;
@@ -23,8 +23,8 @@ Api.interceptors.request.use(
 
 //axios interceptor for response, logout if err status 401
  Api.interceptors.response.use( (response) => {
-   console.log("response interceptor: Authorized response")
-   return response;
+   //console.log("response interceptor: Authorized response")
+   return response.data;
  },(error) => {
 
     return Promise.reject(error);
