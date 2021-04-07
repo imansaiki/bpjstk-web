@@ -23,23 +23,23 @@
     >
       <div class="q-pb-sm"></div>
       <q-list>
-        <q-item clickable v-ripple>
+        <q-item clickable v-ripple @click="route('/')" :active="active('/')" active-class="bg-teal-1 text-grey-8">
           <q-item-section avatar>
             <q-icon name="business_center" size="lg" />
           </q-item-section>
-          <q-item-section> Perusahaan Binaan </q-item-section>
+          <q-item-section> Daftar Perusahaan </q-item-section>
         </q-item>
-        <q-item clickable v-ripple>
+        <q-item clickable v-ripple @click="route('/surat')" :active="active('/surat')" active-class="bg-teal-1 text-grey-8">
           <q-item-section avatar>
             <q-icon name="forward_to_inbox" />
           </q-item-section>
-          <q-item-section> Riwayat Surat Keluar </q-item-section>
+          <q-item-section> Riwayat Surat </q-item-section>
         </q-item>
-        <q-item clickable v-ripple>
+        <q-item clickable v-ripple @click="route('/pembina')" :active="active('/pembina')" active-class="bg-teal-1 text-grey-8">
           <q-item-section avatar>
             <q-icon name="person" />
           </q-item-section>
-          <q-item-section> Karyawan </q-item-section>
+          <q-item-section> Daftar Pembina </q-item-section>
         </q-item>
       </q-list>
     </q-drawer>
@@ -59,6 +59,12 @@ export default {
     };
   },
   methods:{
+    route(path){
+      if (this.$route.path !== path) this.$router.push(path)
+    },
+    active(path){
+      if (this.$route.path == path) return true
+    },
     logout(){
       this.$store.dispatch("logout").then((resp)=>{
         this.$router.push({ name: "LoginPage" });

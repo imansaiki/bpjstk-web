@@ -6,7 +6,7 @@
     :columns="columns"
     :pagination.sync="pagination"
     :rows-per-page-options="[10, 20, 30]"
-    @update:pagination="loadData"
+    @request="onRequest"
     row-key="name"
   >
     <template v-slot:body="props">
@@ -35,11 +35,20 @@
   </q-table>
 </template>
 <script>
+import { Api } from 'boot/axios'
 export default {
   name: "ListPembina",
   data() {
     return {
       icon: false,
+      pagination: {
+        //sortBy: 'desc',
+        //descending: false,
+        page: 1,
+        rowsPerPage: 10
+        // rowsNumber: xx if getting data from a server
+      },
+      searchQuery:{},
       columns: [
         {
           name: "chKodePembina",
@@ -69,25 +78,54 @@ export default {
   },
   mounted(){
     console.log("ListPembinaInit")
+    this.loadData({size:this.pagination.rowsPerPage,page:this.pagination.page-1})
   },
   methods: {
     detailPembina(kodePembina) {
       console.log(kodePembina, "clicked");
     },
-    loadData(query){
+    loadData(queryReq){
       return new Promise((resolve,reject)=>{
-        query.page=this.pagination.page-1
-        query.size=this.pagination.rowsPerPage
-        Api.get("/pembina/getAll",{params:query})
+        this.$q.loading.show()
+        console.log(this.query,"query")
+        queryReq.page=this.pagination.page-1
+        queryReq.size=this.pagination.rowsPerPage
+        this.query=queryReq
+        Api.get("/pembina/getAll",{params:this.query})
         .then(res=>{
           console.log(res)
           this.data = res.data.content
+          this.pagination.rowsNumber=res.data.totalElements
           resolve(res)
+          this.$q.loading.hide()
         }).catch(err=>{
           reject(err)
+          this.$q.loading.hide()
         })
       })
     },
+    onRequest(props){
+      this.$q.loading.show()
+      let { page, rowsPerPage, rowsNumber, sortBy, descending } = props.pagination
+      this.query.page=page-1;
+      this.query.size=rowsPerPage;
+      Api.get("/pembina/getAll",{params:this.query})
+        .then(res=>{
+          console.log(res)
+          this.data = res.data.content
+          this.pagination.page = page
+          this.pagination.rowsPerPage = rowsPerPage
+          this.pagination.rowsNumber = res.data.totalElements
+          this.$q.loading.hide()
+          
+        }).catch(err=>{
+          console.log(err)
+          this.$q.loading.hide()
+        }) 
+    }
   },
+  isAdmin(){
+    return this.$store.getters("isAdmin")
+  }
 };
 </script>

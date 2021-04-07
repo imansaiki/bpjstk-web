@@ -7,7 +7,7 @@ export const login = (context,payload) => {
         Api
           .post("/user/signin",payload)
           .then((response) => {
-            context.commit("setLoginData", response.data.data);
+            context.commit("setLoginData", response.data);
             console.log("Login Confirmed");
             resolve(response)
           })

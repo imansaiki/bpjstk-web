@@ -6,7 +6,8 @@
     :columns="columns"
     :pagination.sync="pagination"
     :rows-per-page-options="[10, 20, 30]"
-    @update:pagination="loadData"
+    
+    @request="onRequest"
     row-key="name"
   >
     <template v-slot:body="props">
@@ -35,6 +36,9 @@
         <q-td key="chEmail" :props="props">
           {{ props.row.email }}
         </q-td>
+        <q-td key="chKodePembina" :props="props">
+          {{ props.row.kodePembina }}
+        </q-td>
       </q-tr>
     </template>
   </q-table>
@@ -46,12 +50,13 @@ export default {
   props:["paramParent"],
   data() {
     return {
+      query:{},
       pagination: {
         //sortBy: 'desc',
         //descending: false,
         page: 1,
-        rowsPerPage: 10
-        // rowsNumber: xx if getting data from a server
+        rowsPerPage: 10,
+        rowsNumber: 10
       },
       icon: false,
       columns: [
@@ -74,6 +79,7 @@ export default {
         { name: "chPicPosition", label: "Jabatan PIC", field: "picPosition" },
         { name: "chHp", label: "HP", field: "hp" },
         { name: "chEmail", label: "Email", field: "email" },
+        { name: "chKodePembina", label: "Kode Pembina", field: "kodePembina" },
       ],
       data: [],
     };
@@ -83,7 +89,7 @@ export default {
     if(this.paramParent){
       console.log(this.paramParent)
     }
-    //this.loadData({size:this.pagination.rowsPerPage,page:this.pagination.page-1})
+    this.loadData({size:this.pagination.rowsPerPage,page:this.pagination.page-1})
   },
   watch: {
     // whenever question changes, this function will run
@@ -92,23 +98,50 @@ export default {
    // }
   },
   methods: {
-    loadData(query){
+    loadData(queryReq){
       return new Promise((resolve,reject)=>{
-        query.page=this.pagination.page-1
-        query.size=this.pagination.rowsPerPage
-        Api.get("/perusahaan/getAll",{params:query})
+        this.$q.loading.show()
+        console.log(this.query,"query")
+        queryReq.page=this.pagination.page-1
+        queryReq.size=this.pagination.rowsPerPage
+        this.query=queryReq
+        Api.get("/perusahaan/getAll",{params:this.query})
         .then(res=>{
           console.log(res)
           this.data = res.data.content
+          this.pagination.rowsNumber=res.data.totalElements
           resolve(res)
+          this.$q.loading.hide()
         }).catch(err=>{
           reject(err)
+          this.$q.loading.hide()
         })
       })
+    },
+    onRequest(props){
+      this.$q.loading.show()
+      let { page, rowsPerPage, rowsNumber, sortBy, descending } = props.pagination
+      this.query.page=page-1;
+      this.query.size=rowsPerPage;
+      Api.get("/perusahaan/getAll",{params:this.query})
+        .then(res=>{
+          console.log(res)
+          this.data = res.data.content
+          this.pagination.page = page
+          this.pagination.rowsPerPage = rowsPerPage
+          this.pagination.rowsNumber = res.data.totalElements
+          this.$q.loading.hide()
+        }).catch(err=>{
+          console.log(err)
+          this.$q.loading.hide()
+        }) 
     },
     clickedNpp(npp,name) {
       this.$emit("row-clicked", {npp:npp,name:name});
     },
+    isAdmin(){
+      return this.$store.getters("isAdmin")
+    }
   },
 };
 </script>
