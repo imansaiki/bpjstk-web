@@ -17,6 +17,9 @@
         <q-td key="chJenisSurat" :props="props">
           {{ props.row.jenisSurat }}
         </q-td>
+        <q-td key="chJudulSurat" :props="props">
+          {{ props.row.judulSurat }}
+        </q-td>
         <q-td key="chNpp" :props="props">
           {{ props.row.npp }}
         </q-td>
@@ -24,7 +27,7 @@
           {{ props.row.namaPerusahaan }}
         </q-td>
         <q-td key="chTanggalSurat" :props="props">
-          {{ props.row.tanggalSurat }}
+          {{ formattedDate(props.row.tanggalSurat) }}
         </q-td>
         <q-td key="chNamaPengirim" :props="props">
            {{ props.row.namaPengirim }}
@@ -61,6 +64,12 @@ export default {
           align: "left",
           field: "kodePembina",
         },
+        {
+          name: "chJudulSurat",
+          label: "Judul Surat",
+          align: "left",
+          field: "kodePembina",
+        },
         { 
           name: "chNpp",
           label: "npp",
@@ -90,10 +99,15 @@ export default {
     };
   },
   mounted(){
+    let query ={}
     if(this.paramParent){
-      console.log("called from other")
+      query=this.paramParent
     }
-    this.loadData({size:this.pagination.rowsPerPage,page:this.pagination.page-1})
+    query.size=this.pagination.rowsPerPage
+    query.page=this.pagination.page-1
+    console.log(query)
+    this.loadData(query)
+    //this.loadData({size:this.pagination.rowsPerPage,page:this.pagination.page-1})
   },
   methods:{
     detailSurat(){
@@ -102,7 +116,7 @@ export default {
     loadData(queryReq){
       return new Promise((resolve,reject)=>{
         this.$q.loading.show()
-        console.log(this.query,"query")
+        console.log(queryReq,"query")
         queryReq.page=this.pagination.page-1
         queryReq.size=this.pagination.rowsPerPage
         this.query=queryReq
@@ -137,6 +151,11 @@ export default {
           console.log(err)
           this.$q.loading.hide()
         }) 
+    },
+    formattedDate(date){
+      let dateType = new Date(date)
+      let month = dateType.getMonth() +1
+      return dateType.getFullYear()+"-"+month+"-"+dateType.getDate()
     },
     isAdmin(){
       return this.$store.getters("isAdmin")

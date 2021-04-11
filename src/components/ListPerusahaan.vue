@@ -86,10 +86,14 @@ export default {
   },
   mounted(){
     console.log("ListPerusahaanInit")
+    let query ={}
     if(this.paramParent){
-      console.log(this.paramParent)
+      query=this.paramParent
     }
-    this.loadData({size:this.pagination.rowsPerPage,page:this.pagination.page-1})
+    query.size=this.pagination.rowsPerPage
+    query.page=this.pagination.page-1
+    console.log(query)
+    this.loadData(query)
   },
   watch: {
     // whenever question changes, this function will run

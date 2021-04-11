@@ -78,7 +78,14 @@ export default {
   },
   mounted(){
     console.log("ListPembinaInit")
-    this.loadData({size:this.pagination.rowsPerPage,page:this.pagination.page-1})
+    let query ={}
+    if(this.paramParent){
+      query=this.paramParent
+    }
+    query.size=this.pagination.rowsPerPage
+    query.page=this.pagination.page-1
+    console.log(query)
+    this.loadData(query)
   },
   methods: {
     detailPembina(kodePembina) {
