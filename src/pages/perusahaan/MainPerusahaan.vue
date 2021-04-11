@@ -90,6 +90,7 @@ export default {
     },
     dataSaved(e){
       this.addForm = false;
+      this.filterTable()
     },
     filterTable(){
       let query = {}
