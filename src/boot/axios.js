@@ -3,7 +3,10 @@ import Axios from 'axios'
 
 Vue.prototype.$axios = Axios
 
-const Api = Axios.create({ baseURL: 'http://localhost:8081' })
+//LOCAL
+//const Api = Axios.create({ baseURL: 'http://localhost:8081' })
+//HEROKU
+const Api = Axios.create({ baseURL: 'https://bpjstkbe.herokuapp.com' })
 
 Api.interceptors.request.use(
   (config) => {
