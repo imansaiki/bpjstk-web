@@ -1,5 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import State from './states'
+import * as Getters from './getters'
+import * as Actions from './actions'
+import * as Mutations from './mutations'
+
 
 // import example from './module-example'
 
@@ -14,8 +19,11 @@ Vue.use(Vuex)
  * with the Store instance.
  */
 
-export default function (/* { ssrContext } */) {
-  const Store = new Vuex.Store({
+export default new Vuex.Store({
+    state:State,
+    actions:Actions,
+    getters:Getters,
+    mutations:Mutations,
     modules: {
       // example
     },
@@ -25,5 +33,3 @@ export default function (/* { ssrContext } */) {
     strict: process.env.DEBUGGING
   })
 
-  return Store
-}
