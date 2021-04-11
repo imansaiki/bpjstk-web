@@ -28,12 +28,15 @@ export default {
   },
   methods:{
     login(){
+      this.$q.loading.show()
       this.$store.dispatch("login",{username:this.username, password:this.password})
       .then((response) => {
         console.log(response)
         this.$router.push({ name: "PerusahaanPage" });
+        this.$q.loading.hide()
       })
       .catch((err) => {
+        this.$q.loading.hide()
         console.log(err)
         Notify.create({
           color: 'negative',
