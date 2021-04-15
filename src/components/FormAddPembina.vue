@@ -55,7 +55,7 @@ export default {
     return {
         pembina:{
             nip:"",
-            id:"",
+            idPembina:"",
             nama:"",
             kodePembina:"",
             password:"",
@@ -68,6 +68,7 @@ export default {
     };
   },
   mounted(){
+      console.log(this.pembinaObject)
       if(this.pembinaObject){
           this.setPembina(this.pembinaObject)
       }
@@ -94,31 +95,31 @@ export default {
     },
     setPembina(pembinaObject){
         if(pembinaObject.id){
-          this.perusahaan.id=pembinaObject.id
+          this.pembina.idPembina=pembinaObject.id
       }
       if(pembinaObject.nip){
-          this.perusahaan.nip=pembinaObject.nip
+          this.pembina.nip=pembinaObject.nip
       }
       if(pembinaObject.nama){
-          this.perusahaan.nama=pembinaObject.nama
+          this.pembina.nama=pembinaObject.nama
       }
       if(pembinaObject.alamat){
-          this.perusahaan.alamat=pembinaObject.alamat
+          this.pembina.alamat=pembinaObject.alamat
       }
       if(pembinaObject.kota){
-          this.perusahaan.kota=pembinaObject.kota
+          this.pembina.kota=pembinaObject.kota
       }
       if(pembinaObject.password){
-          this.perusahaan.password=pembinaObject.password
+          this.pembina.password=pembinaObject.password
       }
       if(pembinaObject.kodePembina){
-          this.perusahaan.kodePembina=pembinaObject.kodePembina
+          this.pembina.kodePembina=pembinaObject.kodePembina
       }
       if(pembinaObject.email){
-          this.perusahaan.email=pembinaObject.email
+          this.pembina.email=pembinaObject.email
       }
       if(pembinaObject.telepon){
-          this.perusahaan.telepon=pembinaObject.telepon
+          this.pembina.telepon=pembinaObject.telepon
       }
     }
   }
