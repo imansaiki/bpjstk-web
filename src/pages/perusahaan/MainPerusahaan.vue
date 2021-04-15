@@ -33,7 +33,7 @@
         </q-card>
       </q-expansion-item>
     </q-list>
-    <div class="q-pt-md">
+    <div v-if="this.$store.getters.isAdmin" class="q-pt-md">
       <q-btn @click="addFormShow">Tambah Perusahaan</q-btn>
     </div>
     <div class="q-pt-md">

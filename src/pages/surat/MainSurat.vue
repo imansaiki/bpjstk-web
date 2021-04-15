@@ -66,6 +66,9 @@
         </q-card>
       </q-expansion-item>
     </q-list>
+    <div v-if="this.$store.getters.isAdmin" class="q-pt-md">
+      <q-btn @click="addFormShow">Tambah Surat</q-btn>
+    </div>
     <div class="q-pt-md">
       <list-surat-perusahaan ref="listSuratComp"></list-surat-perusahaan>
     </div>
@@ -73,18 +76,25 @@
       <basic-dialog-card
         ></basic-dialog-card>
     </q-dialog>
+    <q-dialog v-model="addForm" full-width persistent>
+      <basic-dialog-card>
+        <form-add-surat @data-saved="dataSaved"></form-add-surat>
+      </basic-dialog-card>
+    </q-dialog>
   </q-page>
 </template>
 
 <script>
+import FormAddSurat from "components/FormAddSurat.vue"
 import ListPerusahaan from "components/ListPerusahaan.vue";
 import ListSuratPerusahaan from "components/ListSuratPerusahaan.vue";
 import BasicDialogCard from "components/BasicDialogCard.vue";
 export default {
   name: "SuratMain",
-  components: { ListSuratPerusahaan, BasicDialogCard, ListPerusahaan },
+  components: { ListSuratPerusahaan, BasicDialogCard, ListPerusahaan, FormAddSurat },
   data() {
     return {
+      addForm:false,
       listSurat: false,
       perusahaanQuery: "",
       nppQuery:"",
@@ -100,6 +110,12 @@ export default {
     listSuratShow(e) {
       console.log(e);
       this.listSurat = true;
+    },
+    addFormShow(){
+      this.addForm=true
+    },
+    dataSaved(e){
+      
     },
     filterTable(){
       let query = {}

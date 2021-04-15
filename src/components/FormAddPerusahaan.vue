@@ -92,7 +92,7 @@ export default {
         Notify.create({
           color: 'negative',
           position: 'top',
-          message: 'Login Gagal',
+          message: err.message,
           icon: 'report_problem'
         })
       })

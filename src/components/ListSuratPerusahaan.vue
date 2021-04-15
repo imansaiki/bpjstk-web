@@ -110,8 +110,8 @@ export default {
     //this.loadData({size:this.pagination.rowsPerPage,page:this.pagination.page-1})
   },
   methods:{
-    detailSurat(){
-      console.log("aaa")
+    detailSurat(e){
+      console.log(e)
     },
     loadData(queryReq){
       return new Promise((resolve,reject)=>{
@@ -156,6 +156,9 @@ export default {
       let dateType = new Date(date)
       let month = dateType.getMonth() +1
       return dateType.getFullYear()+"-"+month+"-"+dateType.getDate()
+    },
+    limitText(value,length){
+      if(value) return value.substring(0,length)
     },
     isAdmin(){
       return this.$store.getters("isAdmin")
