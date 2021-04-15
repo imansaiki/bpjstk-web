@@ -85,6 +85,7 @@ import FormAddSurat from "components/FormAddSurat.vue"
 import ListPerusahaan from "components/ListPerusahaan.vue";
 import ListSuratPerusahaan from "components/ListSuratPerusahaan.vue";
 import BasicDialogCard from "components/BasicDialogCard.vue";
+import moment from 'moment';
 export default {
   name: "SuratMain",
   components: { ListSuratPerusahaan, BasicDialogCard, ListPerusahaan, FormAddSurat },
@@ -134,6 +135,9 @@ export default {
       }
 
       this.$refs.listSuratComp.loadData(query)
+    },
+    formatDate(date){
+      return moment(date).format("YYYY-MM-DD")
     }
   },
 };

@@ -27,7 +27,7 @@
           {{ props.row.namaPerusahaan }}
         </q-td>
         <q-td key="chTanggalSurat" :props="props">
-          {{ formattedDate(props.row.tanggalSurat) }}
+          {{ formatDate(props.row.tanggalSurat) }}
         </q-td>
         <q-td key="chNamaPengirim" :props="props">
            {{ props.row.namaPengirim }}
@@ -43,6 +43,7 @@
 </template>
 <script>
 import { Api } from 'boot/axios'
+import moment from 'moment';
 export default {
   name: "ListSuratPerusahaan",
   props:["paramParent"],
@@ -179,10 +180,8 @@ export default {
     deleteButton(row) {
       this.$emit("delete-clicked", row);
     },
-    formattedDate(date){
-      let dateType = new Date(date)
-      let month = dateType.getMonth() +1
-      return dateType.getFullYear()+"-"+month+"-"+dateType.getDate()
+    formatDate(date){
+      return moment(date).format("YYYY-MM-DD")
     },
     limitText(value,length){
       if(value) return value.substring(0,length)
