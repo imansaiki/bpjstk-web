@@ -7,26 +7,26 @@
       <q-card-section>
         <q-form @submit="submitForm" class="q-gutter-md">
             <div class="row">
-                <div class="col">
+                <div class="col-xs-12 col-sm-6 col-md-6 q-pa-sm">
                     <q-input v-model="surat.kodeSurat" label="Kode Surat" />
                 </div>
-                <div class="col">
+                <div class="col-xs-12 col-sm-6 col-md-6 q-pa-sm">
                     <q-input v-model="surat.npp" label="NPP" />
                 </div>
             </div>
             <div class="row">
-                <div class="col">
+                <div class="col-xs-12 col-sm-6 col-md-6 q-pa-sm">
                     <q-input v-model="surat.judulSurat" label="Judul Surat" />
                 </div>
-                <div class="col">
+                <div class="col-xs-12 col-sm-6 col-md-6 q-pa-sm">
                     <q-input v-model="surat.tanggalSurat" label="Tanggal Surat" />
                 </div>
             </div>
             <div class="row">
-                <div class="col">
+                <div class="col-xs-12 col-sm-6 col-md-6 q-pa-sm">
                     <q-input v-model="surat.jenisSurat" label="Jenis Surat" />
                 </div>
-                <div class="col">
+                <div class="col-xs-12 col-sm-6 col-md-6 q-pa-sm">
                     <q-input v-model="surat.namaPengirim" label="Nama Pengirim"  />
                 </div>
             </div>                       
@@ -90,6 +90,9 @@ export default {
       }
       if(suratObject.judulSurat){
           this.surat.judulSurat=suratObject.judulSurat
+      }
+      if(suratObject.kodeSurat){
+          this.surat.kodeSurat=suratObject.kodeSurat
       }
       if(suratObject.tanggalSurat){
           this.surat.tanggalSurat=suratObject.tanggalSurat

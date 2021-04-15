@@ -3,7 +3,7 @@
     :title="'List Surat '"
     dense
     :data="data"
-    :columns="columns"
+    :columns="filteredColumn"
     :pagination.sync="pagination"
     :rows-per-page-options="[10, 20, 30]"
     @request="onRequest"
@@ -31,6 +31,11 @@
         </q-td>
         <q-td key="chNamaPengirim" :props="props">
            {{ props.row.namaPengirim }}
+        </q-td>
+        <q-td key="chAction" :props="props" class="q-gutter-xs">
+          <q-btn dense round icon="info" size="s" color="primary" @click="detailButton(props.row)"></q-btn>
+          <q-btn v-if="isAdmin" dense round icon="edit" size="s" color="accent" @click="editButton(props.row)"></q-btn>
+          <q-btn v-if="isAdmin" dense round icon="delete" size="s" color="negative" @click="deleteButton(props.row)"></q-btn>
         </q-td>
       </q-tr>
     </template>
@@ -94,6 +99,7 @@ export default {
           align: "left",
           field: "kodePembina",
         },
+        { name: "chAction", label: "Action", field: "action" },
       ],
       data: [],
     };
@@ -108,6 +114,14 @@ export default {
     console.log(query)
     this.loadData(query)
     //this.loadData({size:this.pagination.rowsPerPage,page:this.pagination.page-1})
+  },
+  computed:{
+    filteredColumn(){
+      if(this.paramParent){
+        return this.columns.filter(e=>e.name!="chAction")
+      }
+      return this.columns
+    }
   },
   methods:{
     detailSurat(e){
@@ -151,6 +165,19 @@ export default {
           console.log(err)
           this.$q.loading.hide()
         }) 
+    },
+    editButton(row) {
+      console.log("edit")
+      this.$emit("edit-clicked", row);
+    },
+    detailButton(row) {
+      this.$emit("detail-clicked", row);
+    },
+    listButton(row) {
+      this.$emit("list-clicked", row);
+    },
+    deleteButton(row) {
+      this.$emit("delete-clicked", row);
     },
     formattedDate(date){
       let dateType = new Date(date)

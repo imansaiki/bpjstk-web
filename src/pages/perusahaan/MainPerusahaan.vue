@@ -10,18 +10,18 @@
         <q-card>
           <q-card-section>
             <div class="row">
-              <div class="col">
+              <div class="col-xs-12 col-sm-6 col-md-6 q-pa-sm">
                 <q-input v-model="nppQuery" label="NPP" />
               </div>
-              <div class="col">
+              <div class="col-xs-12 col-sm-6 col-md-6 q-pa-sm">
                 <q-input v-model="perusahaanQuery" label="Perusahaan" />
               </div>
             </div>
             <div class="row">
-              <div class="col">
+              <div class="col-xs-12 col-sm-6 col-md-6 q-pa-sm">
                 <q-input v-model="kotaQuery" label="Kota" />
               </div>
-              <div class="col">
+              <div class="col-xs-12 col-sm-6 col-md-6 q-pa-sm">
                 <q-input v-model="kodePembinaQuery" label="Kode Pemibina" />
               </div>
             </div>
@@ -37,7 +37,7 @@
       <q-btn @click="addFormShow">Tambah Perusahaan</q-btn>
     </div>
     <div class="q-pt-md">
-      <list-perusahaan @row-clicked="listSuratShow" ref="listPerusahaanComp"></list-perusahaan>
+      <list-perusahaan @list-clicked="listSuratShow" @edit-clicked="addFormShow" ref="listPerusahaanComp"></list-perusahaan>
     </div>
     <q-dialog v-model="listSurat" full-width persistent>
       <basic-dialog-card>
@@ -46,7 +46,7 @@
     </q-dialog>
     <q-dialog v-model="addForm" full-width persistent>
       <basic-dialog-card>
-        <form-add-perusahaan @data-saved="dataSaved"></form-add-perusahaan>
+        <form-add-perusahaan v-bind:perusahaanObject="perusahaanObject" @data-saved="dataSaved"></form-add-perusahaan>
       </basic-dialog-card>
     </q-dialog>
   </q-page>
@@ -70,7 +70,8 @@ export default {
       kotaQuery:"",
       kodePembinaQuery:"",
       left: false,
-      clickedRowObj:null
+      clickedRowObj:null,
+      perusahaanObject:null
       
     };
   },
@@ -84,8 +85,8 @@ export default {
       this.listSurat = true;
     },
     addFormShow(e) {
-      
-      //this.clickedRowObj={nppEq:e.npp}
+      //console.log(e)
+      this.perusahaanObject=e
       this.addForm = true;
     },
     dataSaved(e){
