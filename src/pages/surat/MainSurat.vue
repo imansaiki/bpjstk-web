@@ -10,23 +10,23 @@
         <q-card>
           <q-card-section>
             <div class="row">
-              <div class="col">
+              <div class="col-xs-12 col-sm-6 col-md-6 q-pa-sm">
                 <q-input v-model="nppQuery" label="NPP" />
               </div>
-              <div class="col">
+              <div class="col-xs-12 col-sm-6 col-md-6 q-pa-sm">
                 <q-input v-model="perusahaanQuery" label="Perusahaan" />
               </div>
             </div>
             <div class="row">
-              <div class="col">
+              <div class="col-xs-12 col-sm-6 col-md-6 q-pa-sm">
                 <q-input v-model="judulQuery" label="Judul" />
               </div>
-              <div class="col">
+              <div class="col-xs-12 col-sm-6 col-md-6 q-pa-sm">
                 <q-input v-model="kodeQuery" label="Kode" />
               </div>
             </div>
             <div class="row">
-              <div class="col">
+              <div class="col-xs-12 col-sm-6 col-md-6 q-pa-sm">
                 <q-input v-model="tanggalStartQuery" label="Tanggal sesudah">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
@@ -41,7 +41,7 @@
                   </template>
                 </q-input>
               </div>
-              <div class="col">
+              <div class="col-xs-12 col-sm-6 col-md-6 q-pa-sm">
                 <q-input v-model="tanggalEndQuery" label="Tanggal sebelum">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
@@ -70,15 +70,11 @@
       <q-btn @click="addFormShow">Tambah Surat</q-btn>
     </div>
     <div class="q-pt-md">
-      <list-surat-perusahaan ref="listSuratComp"></list-surat-perusahaan>
+      <list-surat-perusahaan ref="listSuratComp" @edit-clicked="addFormShow"></list-surat-perusahaan>
     </div>
-    <q-dialog v-model="listSurat" full-width persistent>
-      <basic-dialog-card
-        ></basic-dialog-card>
-    </q-dialog>
     <q-dialog v-model="addForm" full-width persistent>
       <basic-dialog-card>
-        <form-add-surat @data-saved="dataSaved"></form-add-surat>
+        <form-add-surat @data-saved="dataSaved" v-bind:suratObject="suratObject"></form-add-surat>
       </basic-dialog-card>
     </q-dialog>
   </q-page>
@@ -103,19 +99,18 @@ export default {
       tanggalStartQuery:"",
       tanggalEndQuery:"",
       left: false,
+      suratObject:null
       
     };
   },
   methods: {
-    listSuratShow(e) {
-      console.log(e);
-      this.listSurat = true;
-    },
-    addFormShow(){
+    addFormShow(e){
+      this.suratObject=e
       this.addForm=true
     },
     dataSaved(e){
-      
+      this.addForm = false;
+      this.filterTable()
     },
     filterTable(){
       let query = {}

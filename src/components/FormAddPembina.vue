@@ -7,34 +7,34 @@
       <q-card-section>
         <q-form @submit="submitForm" class="q-gutter-md">
             <div class="row">
-                <div class="col">
+                <div class="col-xs-12 col-sm-6 col-md-6 q-pa-sm">
                     <q-input v-model="pembina.nip" label="NIP" :rules="[val => !!val || 'Field is required']"/>
                 </div>
-                <div class="col">
+                <div class="col-xs-12 col-sm-6 col-md-6 q-pa-sm">
                     <q-input v-model="pembina.nama" label="Nama" :rules="[val => !!val || 'Field is required']"/>
                 </div>
             </div>
             <div class="row">
-                <div class="col">
+                <div class="col-xs-12 col-sm-6 col-md-6 q-pa-sm">
                     <q-input v-model="pembina.kodePembina" label="Kode Pembina" :rules="[val => !!val || 'Field is required']"/>
                 </div>
-                <div class="col">
+                <div class="col-xs-12 col-sm-6 col-md-6 q-pa-sm">
                     <q-input v-model="pembina.password" label="Password" :rules="[val => !!val || 'Field is required']"/>
                 </div>
             </div>
             <div class="row">
-                <div class="col">
+                <div class="col-xs-12 col-sm-6 col-md-6 q-pa-sm">
                     <q-input v-model="pembina.alamat" label="Alamat" />
                 </div>
-                <div class="col">
+                <div class="col-xs-12 col-sm-6 col-md-6 q-pa-sm">
                     <q-input v-model="pembina.kota" label="Kota"  />
                 </div>
             </div>
             <div class="row">
-                <div class="col">
+                <div class="col-xs-12 col-sm-6 col-md-6 q-pa-sm">
                     <q-input v-model="pembina.telepon" label="Telepon" />
                 </div>
-                <div class="col">
+                <div class="col-xs-12 col-sm-6 col-md-6 q-pa-sm">
                     <q-input v-model="pembina.email" label="Email" />
                 </div>
             </div>                      

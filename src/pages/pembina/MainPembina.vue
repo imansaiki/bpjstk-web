@@ -10,8 +10,8 @@
         <q-card>
           <q-card-section>
             <div class="row">
-              <div class="col"><q-input v-model="text" label="NPP" /></div>
-              <div class="col">
+              <div class="col-xs-12 col-sm-6 col-md-6 q-pa-sm"><q-input v-model="text" label="NPP" /></div>
+              <div class="col-xs-12 col-sm-6 col-md-6 q-pa-sm">
                 <q-input v-model="text" label="Perusahaan" />
               </div>
               <q-btn color="primary" label="Search" />

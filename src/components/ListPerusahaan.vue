@@ -3,7 +3,7 @@
     :title="'Daftar Perusahaan'"
     dense
     :data="data"
-    :columns="columns"
+    :columns="filteredColumn"
     :pagination.sync="pagination"
     :rows-per-page-options="[10, 20, 30]"
     
@@ -11,7 +11,7 @@
     row-key="name"
   >
     <template v-slot:body="props">
-      <q-tr :props="props" @click="clickedNpp(props.row.npp,props.row.name)">
+      <q-tr :props="props" >
         <q-td key="chNpp" :props="props">
           {{ props.row.npp }}
         </q-td>
@@ -39,6 +39,12 @@
         <q-td key="chKodePembina" :props="props">
           {{ props.row.kodePembina }}
         </q-td>
+        <q-td key="chAction" :props="props" class="q-gutter-xs">
+          <q-btn dense round icon="list" size="s" color="info" @click="listButton(props.row)"></q-btn>
+          <q-btn dense round icon="info" size="s" color="primary" @click="detailButton(props.row)"></q-btn>
+          <q-btn v-if="isAdmin" dense round icon="edit" size="s" color="accent" @click="editButton(props.row)"></q-btn>
+          <q-btn v-if="isAdmin" dense round icon="delete" size="s" color="negative" @click="deleteButton(props.row)"></q-btn>
+        </q-td>
       </q-tr>
     </template>
   </q-table>
@@ -62,7 +68,6 @@ export default {
       columns: [
         {
           name: "chNpp",
-          required: true,
           label: "NPP",
           field: "npp",
           align: "left",
@@ -75,11 +80,12 @@ export default {
         },
         { name: "chAlamat", label: "Alamat", field: "alamat"},
         { name: "chKota", label: "Kota/Kabupaten", field: "kota" },
-        { name: "chPic", label: "Nama PIC", field: "pic" },
-        { name: "chPicPosition", label: "Jabatan PIC", field: "picPosition" },
+        { name: "chPic", label: "Nama PIC", field: "namaPic" },
+        { name: "chPicPosition", label: "Jabatan PIC", field: "jabatanPic" },
         { name: "chHp", label: "HP", field: "hp" },
         { name: "chEmail", label: "Email", field: "email" },
         { name: "chKodePembina", label: "Kode Pembina", field: "kodePembina" },
+        { name: "chAction", label: "Action", field: "action" },
       ],
       data: [],
     };
@@ -100,6 +106,15 @@ export default {
     //pagination: function (newPagination, oldPagination) {
     //  this.loadData({page:newPagination.page,size:newPagination.rowsPerPage})
    // }
+  },
+  computed:{
+    filteredColumn(){
+      
+      if(this.paramParent){
+        return this.columns.filter(e=>e.name!="chAction")
+      }
+      return this.columns
+    }
   },
   methods: {
     loadData(queryReq){
@@ -140,8 +155,18 @@ export default {
           this.$q.loading.hide()
         }) 
     },
-    clickedNpp(npp,name) {
-      this.$emit("row-clicked", {npp:npp,name:name});
+    editButton(row) {
+      console.log("edit")
+      this.$emit("edit-clicked", row);
+    },
+    detailButton(row) {
+      this.$emit("detail-clicked", row);
+    },
+    listButton(row) {
+      this.$emit("list-clicked", row);
+    },
+    deleteButton(row) {
+      this.$emit("delete-clicked", row);
     },
     limitText(value,length){
       if(value){

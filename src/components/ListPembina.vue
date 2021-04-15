@@ -20,7 +20,7 @@
         <q-td key="chNama" :props="props">
           {{ props.row.nama }}
         </q-td>
-        <q-td key="chHp" :props="props">
+        <q-td key="chTelepon" :props="props">
           {{ props.row.telepon }}
         </q-td>
         <q-td key="chEmail" :props="props">
@@ -31,6 +31,11 @@
         </q-td>
         <q-td key="chKota" :props="props">
           {{ props.row.kota }}
+        </q-td>
+        <q-td key="chAction" :props="props" class="q-gutter-xs">
+          <q-btn dense round icon="info" size="s" color="primary" @click="detailButton(props.row)"></q-btn>
+          <q-btn v-if="isAdmin" dense round icon="edit" size="s" color="accent" @click="editButton(props.row)"></q-btn>
+          <q-btn v-if="isAdmin" dense round icon="delete" size="s" color="negative" @click="deleteButton(props.row)"></q-btn>
         </q-td>
       </q-tr>
     </template>
@@ -71,10 +76,9 @@ export default {
           field: "nama",
         },
         { name: "chTelepon", label: "Telepon", field: "telepon" },
+        { name: "chEmail", label: "Email", field: "email" },
         { name: "chAlamat", label: "Alamat", field: "alamat" },
         { name: "chKota", label: "Kota", field: "kota" },
-        { name: "chEmail", label: "Email", field: "email" },
-        { name: "chLevel", label: "Level", field: "level" },
         {
           name: "chAction",
           label: "Action",
@@ -137,10 +141,23 @@ export default {
           console.log(err)
           this.$q.loading.hide()
         }) 
+    },
+    editButton(row) {
+      console.log("edit")
+      this.$emit("edit-clicked", row);
+    },
+    detailButton(row) {
+      this.$emit("detail-clicked", row);
+    },
+    listButton(row) {
+      this.$emit("list-clicked", row);
+    },
+    deleteButton(row) {
+      this.$emit("delete-clicked", row);
+    },
+    isAdmin(){
+      return this.$store.getters("isAdmin")
     }
-  },
-  isAdmin(){
-    return this.$store.getters("isAdmin")
   }
 };
 </script>
