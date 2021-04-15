@@ -23,23 +23,11 @@
     >
       <div class="q-pb-sm"></div>
       <q-list>
-        <q-item clickable v-ripple @click="route('/')" :active="active('/')" active-class="bg-teal-1 text-grey-8">
+        <q-item  v-for="(menu,index) in listMenuFiltered" v-bind:key="index"  clickable v-ripple @click="route(menu.url)" :active="active(menu.url)" active-class="bg-teal-1 text-grey-8">
           <q-item-section avatar>
-            <q-icon name="business_center" size="lg" />
+            <q-icon :name="menu.icon" size="lg" />
           </q-item-section>
-          <q-item-section> Daftar Perusahaan </q-item-section>
-        </q-item>
-        <q-item clickable v-ripple @click="route('/surat')" :active="active('/surat')" active-class="bg-teal-1 text-grey-8">
-          <q-item-section avatar>
-            <q-icon name="forward_to_inbox" />
-          </q-item-section>
-          <q-item-section> Riwayat Surat </q-item-section>
-        </q-item>
-        <q-item clickable v-ripple @click="route('/pembina')" :active="active('/pembina')" active-class="bg-teal-1 text-grey-8">
-          <q-item-section avatar>
-            <q-icon name="person" />
-          </q-item-section>
-          <q-item-section> Daftar Pembina </q-item-section>
+          <q-item-section> {{menu.name}} </q-item-section>
         </q-item>
       </q-list>
     </q-drawer>
@@ -56,7 +44,32 @@ export default {
   data() {
     return {
       left: false,
+      listMenu:[
+        {
+          name:"Daftar Perusahaan",
+          url:"/",
+          forRole:["ROLE_ADMIN","ROLE_PEMBINA"],
+          icon:"business_center"
+        },
+        {
+          name:"Riwayat Surat",
+          url:"/surat",
+          forRole:["ROLE_ADMIN","ROLE_PEMBINA"],
+          icon:"forward_to_inbox"
+        },
+        {
+          name:"Daftar Pembina",
+          url:"/pembina",
+          forRole:["ROLE_ADMIN","ROLE_PEMBINA"],
+          icon:"person"
+        },
+      ]
     };
+  },
+  computed:{
+    listMenuFiltered(){
+      return this.listMenu.filter(e=>e.forRole.includes(this.$store.getters.getRole))
+    }
   },
   methods:{
     route(path){

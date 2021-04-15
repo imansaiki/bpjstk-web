@@ -27,10 +27,12 @@ Api.interceptors.request.use(
 //axios interceptor for response, logout if err status 401
  Api.interceptors.response.use( (response) => {
    //console.log("response interceptor: Authorized response")
+  //console.log(response)
    return response.data;
  },(error) => {
-
-    return Promise.reject(error);
+   //console.log(response)
+    //console.log(error.response)
+    return Promise.reject({code:error.response.status,message:error.response.data.message,data:error.response.data});
  });
 
 Vue.prototype.$api = Api

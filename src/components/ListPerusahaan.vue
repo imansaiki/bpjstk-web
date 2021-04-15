@@ -19,7 +19,7 @@
           {{ props.row.nama }}
         </q-td>
         <q-td key="chAlamat" :props="props">
-          {{ props.row.alamat }}
+          {{  limitText(props.row.alamat,60) }}
         </q-td>
         <q-td key="chKota" :props="props">
           {{ props.row.kota }}
@@ -142,6 +142,13 @@ export default {
     },
     clickedNpp(npp,name) {
       this.$emit("row-clicked", {npp:npp,name:name});
+    },
+    limitText(value,length){
+      if(value){
+        if(value.length>length) return value.substring(0,length)+"..."
+      }
+      return value
+      
     },
     isAdmin(){
       return this.$store.getters("isAdmin")

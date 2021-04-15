@@ -14,22 +14,24 @@
         <q-td key="chKodePembina" :props="props">
           {{ props.row.kodePembina }}
         </q-td>
-        <q-td key="chNamaPembina" :props="props">
-          {{ props.row.namaPembina }}
+        <q-td key="chNip" :props="props">
+          {{ props.row.nip }}
+        </q-td>
+        <q-td key="chNama" :props="props">
+          {{ props.row.nama }}
         </q-td>
         <q-td key="chHp" :props="props">
-          {{ props.row.hp }}
-        </q-td>
-        <q-td key="chAlamat" :props="props">
-          {{ props.row.alamat }}
+          {{ props.row.telepon }}
         </q-td>
         <q-td key="chEmail" :props="props">
           {{ props.row.email }}
         </q-td>
-        <q-td key="chLevel" :props="props">
-          {{ props.row.level }}
+        <q-td key="chAlamat" :props="props">
+          {{ props.row.alamat }}
         </q-td>
-        <q-td key="chAction" :props="props"> </q-td>
+        <q-td key="chKota" :props="props">
+          {{ props.row.kota }}
+        </q-td>
       </q-tr>
     </template>
   </q-table>
@@ -52,19 +54,25 @@ export default {
       columns: [
         {
           name: "chKodePembina",
-          required: true,
           label: "Kode Pembina",
           align: "left",
           field: "kodePembina",
         },
         {
-          name: "chNamaPembina",
+          name: "chNip",
           align: "left",
-          label: "Nama Pembina",
+          label: "NIP",
           field: "namaPembina",
         },
-        { name: "chHp", label: "HP", field: "hp" },
+        {
+          name: "chNama",
+          align: "left",
+          label: "Nama Pembina",
+          field: "nama",
+        },
+        { name: "chTelepon", label: "Telepon", field: "telepon" },
         { name: "chAlamat", label: "Alamat", field: "alamat" },
+        { name: "chKota", label: "Kota", field: "kota" },
         { name: "chEmail", label: "Email", field: "email" },
         { name: "chLevel", label: "Level", field: "level" },
         {
