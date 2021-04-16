@@ -18,23 +18,14 @@
         <q-td key="chPerusahaan" :props="props">
           {{ props.row.nama }}
         </q-td>
-        <q-td key="chAlamat" :props="props">
-          {{  limitText(props.row.alamat,60) }}
-        </q-td>
         <q-td key="chKota" :props="props">
           {{ props.row.kota }}
         </q-td>
         <q-td key="chPic" :props="props">
           {{ props.row.namaPic }}
         </q-td>
-        <q-td key="chPicPosition" :props="props">
-          {{ props.row.jabatanPic }}
-        </q-td>
         <q-td key="chHp" :props="props">
           {{ props.row.telepon }}
-        </q-td>
-        <q-td key="chEmail" :props="props">
-          {{ props.row.email }}
         </q-td>
         <q-td key="chKodePembina" :props="props">
           {{ props.row.kodePembina }}
@@ -78,12 +69,9 @@ export default {
           field: "perusahaan",
           align: "left",
         },
-        { name: "chAlamat", label: "Alamat", field: "alamat"},
         { name: "chKota", label: "Kota/Kabupaten", field: "kota" },
         { name: "chPic", label: "Nama PIC", field: "namaPic" },
-        { name: "chPicPosition", label: "Jabatan PIC", field: "jabatanPic" },
         { name: "chHp", label: "HP", field: "hp" },
-        { name: "chEmail", label: "Email", field: "email" },
         { name: "chKodePembina", label: "Kode Pembina", field: "kodePembina" },
         { name: "chAction", label: "Action", field: "action" },
       ],

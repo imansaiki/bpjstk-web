@@ -42,7 +42,7 @@
       <q-btn @click="addFormShow">Tambah Pembina</q-btn>
     </div>
     <div class="q-pt-md">
-      <list-pembina ref="listPembinaComp" @edit-clicked="addFormShow"></list-pembina>
+      <list-pembina ref="listPembinaComp" @edit-clicked="addFormShow" @delete-clicked="deleteDialogShow"></list-pembina>
     </div>
     <q-dialog v-model="listSurat" full-width persistent>
       <basic-dialog-card></basic-dialog-card>
@@ -52,6 +52,20 @@
         <form-add-pembina @data-saved="dataSaved" v-bind:pembinaObject="pembinaObject"></form-add-pembina>
       </basic-dialog-card>
     </q-dialog>
+    <q-dialog v-model="deleteDialog">
+      <q-card style="width: 300px">
+        <q-card-section>
+          <div class="text-h6">Hapus Data</div>
+        </q-card-section>
+        <q-card-section class="q-pt-none">
+          Apakah anda yakin untuk menghapus {{selectedPembinaName}} ?
+        </q-card-section>
+        <q-card-actions align="right" class="bg-white text-teal">
+          <q-btn flat label="Cancel" v-close-popup />
+          <q-btn flat color="negative" label="OK" @click="deletePembina" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
@@ -60,6 +74,7 @@ import ListPembina from "components/ListPembina.vue";
 import BasicDialogCard from "components/BasicDialogCard.vue";
 import FormAddPembina from "components/FormAddPembina.vue";
 import { Api } from 'boot/axios'
+import { Notify } from 'quasar'
 export default {
   name: "PembinaMain",
   components: { ListPembina, BasicDialogCard,FormAddPembina },
@@ -67,6 +82,7 @@ export default {
     return {
       listSurat: false,
       addForm:false,
+      deleteDialog:false,
       kodePembinaQuery:null,
       nipQuery:null,
       namaQuery:null,
@@ -75,7 +91,8 @@ export default {
       kotaQuery:null,
       text: "",
       left: false,
-      pembinaObject:null
+      pembinaObject:null,
+      selectedPembinaName:""
       
     };
   },
@@ -89,6 +106,11 @@ export default {
       //console.log(e)
       this.pembinaObject=e
       this.addForm=true
+    },
+    deleteDialogShow(e){
+      this.pembinaObject=e
+      this.selectedPembinaName =e.nama
+      this.deleteDialog = true;
     },
     filterTable(){
       let query = {}
@@ -111,6 +133,28 @@ export default {
         query.kotaLk=this.kotaQuery
       }
       this.$refs.listPembinaComp.loadData(query)
+    },
+    deletePembina(){
+      this.deleteDialog = false;
+      this.$q.loading.show()
+      Api.post("/pembina/delete",this.pembinaObject).then(res=>{
+        this.filterTable()
+        this.$q.loading.hide()
+        Notify.create({
+          color: 'positive',
+          position: 'top',
+          message: res.message,
+          icon: 'report_problem'
+        })
+      }).catch(err=>{
+        this.$q.loading.hide()
+        Notify.create({
+          color: 'negative',
+          position: 'top',
+          message: err.message,
+          icon: 'report_problem'
+        })
+      })
     },
     dataSaved(e){
       this.addForm = false;

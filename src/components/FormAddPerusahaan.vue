@@ -8,34 +8,34 @@
         <q-form @submit="submitForm" class="q-gutter-md">
             <div class="row">
                 <div class="col-xs-12 col-sm-6 col-md-6 q-pa-sm">
-                    <q-input v-model="perusahaan.npp" label="NPP" />
+                    <q-input :readonly="readOnly" v-model="perusahaan.npp" label="NPP" />
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-6 q-pa-sm ">
-                    <q-input v-model="perusahaan.nama" label="Nama Perusahaan" />
+                    <q-input :readonly="readOnly" v-model="perusahaan.nama" label="Nama Perusahaan" />
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-12 col-sm-6 col-md-6 q-pa-sm">
-                    <q-input v-model="perusahaan.kota" label="Kota" />
+                    <q-input :readonly="readOnly" v-model="perusahaan.kota" label="Kota" />
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-6 q-pa-sm">
-                    <q-input v-model="perusahaan.alamat" label="Alamat Perusahaan" />
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12 col-sm-6 col-md-6 q-pa-sm">
-                    <q-input v-model="perusahaan.namaPic" label="Nama PIC" />
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-6 q-pa-sm">
-                    <q-input v-model="perusahaan.jabatanPic" label="jabatan PIC"  />
+                    <q-input :readonly="readOnly" v-model="perusahaan.alamat" label="Alamat Perusahaan" />
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-12 col-sm-6 col-md-6 q-pa-sm">
-                    <q-input v-model="perusahaan.telepon" label="telepon" />
+                    <q-input :readonly="readOnly" v-model="perusahaan.namaPic" label="Nama PIC" />
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-6 q-pa-sm">
-                    <q-input v-model="perusahaan.email" label="email" />
+                    <q-input :readonly="readOnly" v-model="perusahaan.jabatanPic" label="jabatan PIC"  />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-6 q-pa-sm">
+                    <q-input :readonly="readOnly" v-model="perusahaan.telepon" label="telepon" />
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6 q-pa-sm">
+                    <q-input :readonly="readOnly" v-model="perusahaan.email" label="email" />
                 </div>
             </div>
             <div class="row">
@@ -43,7 +43,7 @@
                     <q-input v-model="perusahaan.kodePembina" label="Kode Pembina" />
                 </div>
             </div>                        
-            <q-btn label="Submit" type="submit" color="primary"/>
+            <q-btn v-if="!readOnly" label="Submit" type="submit" color="primary"/>
         </q-form>
       </q-card-section>
     </q-card>
@@ -55,7 +55,7 @@ import { Api } from 'boot/axios'
 import { Notify } from 'quasar'
 export default {
   name: "FormAddPerusahaan",
-  props:["perusahaanObject"],
+  props:["perusahaanObject","readOnly"],
   data() {
     return {
         perusahaan:{
@@ -69,8 +69,10 @@ export default {
             telepon:"",
             email:"",
             kodePembina:""
-        }
+        },
     };
+  },
+  computed:{
   },
   mounted(){
       if(this.perusahaanObject){
