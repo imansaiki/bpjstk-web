@@ -33,7 +33,6 @@
           {{ props.row.kota }}
         </q-td>
         <q-td key="chAction" :props="props" class="q-gutter-xs">
-          <q-btn dense round icon="info" size="s" color="primary" @click="detailButton(props.row)"></q-btn>
           <q-btn v-if="isAdmin" dense round icon="edit" size="s" color="accent" @click="editButton(props.row)"></q-btn>
           <q-btn v-if="isAdmin" dense round icon="delete" size="s" color="negative" @click="deleteButton(props.row)"></q-btn>
         </q-td>

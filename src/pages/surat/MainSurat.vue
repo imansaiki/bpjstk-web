@@ -70,12 +70,26 @@
       <q-btn @click="addFormShow">Tambah Surat</q-btn>
     </div>
     <div class="q-pt-md">
-      <list-surat-perusahaan ref="listSuratComp" @edit-clicked="addFormShow"></list-surat-perusahaan>
+      <list-surat-perusahaan ref="listSuratComp" @edit-clicked="addFormShow" @delete-clicked="deleteDialogShow"></list-surat-perusahaan>
     </div>
     <q-dialog v-model="addForm" full-width persistent>
       <basic-dialog-card>
         <form-add-surat @data-saved="dataSaved" v-bind:suratObject="suratObject"></form-add-surat>
       </basic-dialog-card>
+    </q-dialog>
+    <q-dialog v-model="deleteDialog">
+      <q-card style="width: 300px">
+        <q-card-section>
+          <div class="text-h6">Hapus Data</div>
+        </q-card-section>
+        <q-card-section class="q-pt-none">
+          Apakah anda yakin untuk menghapus {{selectedSuratKode}} ?
+        </q-card-section>
+        <q-card-actions align="right" class="bg-white text-teal">
+          <q-btn flat label="Cancel" v-close-popup />
+          <q-btn flat color="negative" label="OK" @click="deleteSurat" />
+        </q-card-actions>
+      </q-card>
     </q-dialog>
   </q-page>
 </template>
@@ -85,6 +99,8 @@ import FormAddSurat from "components/FormAddSurat.vue"
 import ListPerusahaan from "components/ListPerusahaan.vue";
 import ListSuratPerusahaan from "components/ListSuratPerusahaan.vue";
 import BasicDialogCard from "components/BasicDialogCard.vue";
+import { Api } from 'boot/axios'
+import { Notify } from 'quasar'
 import moment from 'moment';
 export default {
   name: "SuratMain",
@@ -93,6 +109,7 @@ export default {
     return {
       addForm:false,
       listSurat: false,
+      deleteDialog:false,
       perusahaanQuery: "",
       nppQuery:"",
       kodeQuery:"",
@@ -100,7 +117,8 @@ export default {
       tanggalStartQuery:"",
       tanggalEndQuery:"",
       left: false,
-      suratObject:null
+      suratObject:null,
+      selectedSuratKode:""
       
     };
   },
@@ -108,6 +126,11 @@ export default {
     addFormShow(e){
       this.suratObject=e
       this.addForm=true
+    },
+    deleteDialogShow(e){
+      this.suratObject=e
+      this.selectedSuratKode =e.kodeSurat
+      this.deleteDialog = true;
     },
     dataSaved(e){
       this.addForm = false;
@@ -135,6 +158,28 @@ export default {
       }
 
       this.$refs.listSuratComp.loadData(query)
+    },
+    deleteSurat(){
+      this.deleteDialog = false;
+      this.$q.loading.show()
+      Api.post("/surat/delete",this.suratObject).then(res=>{
+        this.filterTable()
+        this.$q.loading.hide()
+        Notify.create({
+          color: 'positive',
+          position: 'top',
+          message: res.message,
+          icon: 'report_problem'
+        })
+      }).catch(err=>{
+        this.$q.loading.hide()
+        Notify.create({
+          color: 'negative',
+          position: 'top',
+          message: err.message,
+          icon: 'report_problem'
+        })
+      })
     },
     formatDate(date){
       return moment(date).format("YYYY-MM-DD")
