@@ -98,6 +98,11 @@ export default {
     console.log(query)
     this.loadData(query)
   },
+  computed:{
+    isAdmin(){
+      return this.$store.getters.isAdmin
+    }
+  },
   methods: {
     detailPembina(kodePembina) {
       console.log(kodePembina, "clicked");
@@ -155,7 +160,7 @@ export default {
       this.$emit("delete-clicked", row);
     },
     isAdmin(){
-      return this.$store.getters("isAdmin")
+      return this.$store.getters.isAdmin
     }
   }
 };

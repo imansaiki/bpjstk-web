@@ -102,6 +102,9 @@ export default {
         return this.columns.filter(e=>e.name!="chAction")
       }
       return this.columns
+    },
+    isAdmin(){
+      return this.$store.getters.isAdmin
     }
   },
   methods: {
@@ -164,7 +167,7 @@ export default {
       
     },
     isAdmin(){
-      return this.$store.getters("isAdmin")
+      return this.$store.getters.isAdmin
     }
   },
 };
