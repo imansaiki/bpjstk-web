@@ -121,6 +121,9 @@ export default {
         return this.columns.filter(e=>e.name!="chAction")
       }
       return this.columns
+    },
+    isAdmin(){
+      return this.$store.getters.isAdmin
     }
   },
   methods:{
@@ -185,9 +188,7 @@ export default {
     limitText(value,length){
       if(value) return value.substring(0,length)
     },
-    isAdmin(){
-      return this.$store.getters.isAdmin
-    }
+    
   }
 };
 </script>
