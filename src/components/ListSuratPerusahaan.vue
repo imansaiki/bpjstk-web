@@ -186,7 +186,7 @@ export default {
       if(value) return value.substring(0,length)
     },
     isAdmin(){
-      return this.$store.getters("isAdmin")
+      return this.$store.getters.isAdmin
     }
   }
 };

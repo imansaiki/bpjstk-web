@@ -155,7 +155,7 @@ export default {
       this.$emit("delete-clicked", row);
     },
     isAdmin(){
-      return this.$store.getters("isAdmin")
+      return this.$store.getters.isAdmin
     }
   }
 };
